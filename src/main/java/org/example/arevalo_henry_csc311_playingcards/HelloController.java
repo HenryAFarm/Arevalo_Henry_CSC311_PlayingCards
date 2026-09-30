@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 
 public class HelloController {
     @FXML
@@ -20,6 +21,8 @@ public class HelloController {
     private ImageView fourthCardImage;
     @FXML
     private TextField expressionField;
+    @FXML
+    private TextField solutionField;
     @FXML
     private Label statusLabel;
 
@@ -38,6 +41,22 @@ public class HelloController {
         statusLabel.setText(result.getMessage());
         statusLabel.getStyleClass().removeAll("status-neutral", "status-success", "status-error");
         statusLabel.getStyleClass().add(result.isCorrect() ? "status-success" : "status-error");
+    }
+
+    @FXML
+    private void onFindSolutionButtonClick() {
+        Optional<String> solution = gameLogic.findSolution(currentCards);
+        if (solution.isPresent()) {
+            solutionField.setText(solution.get());
+            statusLabel.setText("A solution was found for these cards.");
+            statusLabel.getStyleClass().removeAll("status-neutral", "status-success", "status-error");
+            statusLabel.getStyleClass().add("status-success");
+        } else {
+            solutionField.clear();
+            statusLabel.setText("No solution exists for this set of cards. Refresh to deal new cards.");
+            statusLabel.getStyleClass().removeAll("status-neutral", "status-success", "status-error");
+            statusLabel.getStyleClass().add("status-error");
+        }
     }
 
     @FXML
@@ -62,6 +81,7 @@ public class HelloController {
         }
 
         expressionField.clear();
+        solutionField.clear();
         statusLabel.setText("Enter an expression that uses each card value once and equals 24.");
         statusLabel.getStyleClass().removeAll("status-neutral", "status-success", "status-error");
         statusLabel.getStyleClass().add("status-neutral");

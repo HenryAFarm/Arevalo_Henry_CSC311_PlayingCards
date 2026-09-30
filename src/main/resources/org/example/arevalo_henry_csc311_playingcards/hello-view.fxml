@@ -17,6 +17,12 @@
     <Label text="Card Game 24" styleClass="game-title"/>
     <Label text="Use each card value exactly once with +, -, *, /, and parentheses."
            styleClass="game-instructions"/>
+    <HBox alignment="CENTER" spacing="10.0">
+        <Button text="Find a solution" onAction="#onFindSolutionButtonClick"/>
+        <TextField fx:id="solutionField" promptText="Solution Expression"
+                   editable="false" prefWidth="420.0" maxWidth="420.0"
+                   styleClass="solution-field"/>
+    </HBox>
     <HBox alignment="CENTER" spacing="12.0">
         <ImageView fx:id="firstCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
         <ImageView fx:id="secondCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>

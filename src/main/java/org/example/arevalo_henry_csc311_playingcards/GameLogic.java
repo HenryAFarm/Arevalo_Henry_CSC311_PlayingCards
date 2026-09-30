@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Handles the card-dealing and answer-validation rules for the 24 game.
@@ -29,13 +30,23 @@ public final class GameLogic {
     }
 
     /**
+     * Finds an expression that uses each dealt card value once and evaluates to 24.
+     */
+    public Optional<String> findSolution(List<Card> cards) {
+        validateCards(cards);
+
+        List<SolutionTerm> terms = new ArrayList<>();
+        for (Card card : cards) {
+            terms.add(new SolutionTerm(card.getValue(), Integer.toString(card.getValue())));
+        }
+        return findSolutionExpression(terms);
+    }
+
+    /**
      * Checks that an expression uses the dealt card values exactly once and evaluates to 24.
      */
     public VerificationResult verifyExpression(List<Card> cards, String expression) {
-        Objects.requireNonNull(cards, "cards cannot be null");
-        if (cards.size() != CARDS_PER_ROUND || cards.contains(null)) {
-            throw new IllegalArgumentException("A round must contain exactly four cards.");
-        }
+        validateCards(cards);
         if (expression == null || expression.trim().isEmpty()) {
             return VerificationResult.failure("Enter an expression using the four card values.");
         }
@@ -68,6 +79,75 @@ public final class GameLogic {
         }
 
         return VerificationResult.success();
+    }
+
+    private static void validateCards(List<Card> cards) {
+        Objects.requireNonNull(cards, "cards cannot be null");
+        if (cards.size() != CARDS_PER_ROUND || cards.contains(null)) {
+            throw new IllegalArgumentException("A round must contain exactly four cards.");
+        }
+    }
+
+    private Optional<String> findSolutionExpression(List<SolutionTerm> terms) {
+        if (terms.size() == 1) {
+            return Math.abs(terms.get(0).value - 24.0) <= RESULT_TOLERANCE
+                    ? Optional.of(terms.get(0).expression)
+                    : Optional.empty();
+        }
+
+        for (int firstIndex = 0; firstIndex < terms.size(); firstIndex++) {
+            for (int secondIndex = firstIndex + 1; secondIndex < terms.size(); secondIndex++) {
+                SolutionTerm first = terms.get(firstIndex);
+                SolutionTerm second = terms.get(secondIndex);
+                List<SolutionTerm> remaining = new ArrayList<>();
+                for (int index = 0; index < terms.size(); index++) {
+                    if (index != firstIndex && index != secondIndex) {
+                        remaining.add(terms.get(index));
+                    }
+                }
+
+                for (SolutionTerm combination : combine(first, second)) {
+                    List<SolutionTerm> nextTerms = new ArrayList<>(remaining);
+                    nextTerms.add(combination);
+                    Optional<String> solution = findSolutionExpression(nextTerms);
+                    if (solution.isPresent()) {
+                        return solution;
+                    }
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    private List<SolutionTerm> combine(SolutionTerm first, SolutionTerm second) {
+        List<SolutionTerm> combinations = new ArrayList<>();
+        combinations.add(new SolutionTerm(first.value + second.value,
+                "(" + first.expression + " + " + second.expression + ")"));
+        combinations.add(new SolutionTerm(first.value * second.value,
+                "(" + first.expression + " * " + second.expression + ")"));
+        combinations.add(new SolutionTerm(first.value - second.value,
+                "(" + first.expression + " - " + second.expression + ")"));
+        combinations.add(new SolutionTerm(second.value - first.value,
+                "(" + second.expression + " - " + first.expression + ")"));
+        if (second.value != 0.0) {
+            combinations.add(new SolutionTerm(first.value / second.value,
+                    "(" + first.expression + " / " + second.expression + ")"));
+        }
+        if (first.value != 0.0) {
+            combinations.add(new SolutionTerm(second.value / first.value,
+                    "(" + second.expression + " / " + first.expression + ")"));
+        }
+        return combinations;
+    }
+
+    private static final class SolutionTerm {
+        private final double value;
+        private final String expression;
+
+        private SolutionTerm(double value, String expression) {
+            this.value = value;
+            this.expression = expression;
+        }
     }
 
     public static final class VerificationResult {

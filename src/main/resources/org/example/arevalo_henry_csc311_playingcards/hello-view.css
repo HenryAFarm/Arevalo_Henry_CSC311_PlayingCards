@@ -13,6 +13,10 @@
     -fx-text-fill: #4b5563;
 }
 
+.solution-field {
+    -fx-font-family: monospace;
+}
+
 .status-message {
     -fx-font-size: 14px;
 }
