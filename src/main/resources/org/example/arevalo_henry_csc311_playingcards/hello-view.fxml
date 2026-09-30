@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox alignment="CENTER" spacing="18.0" stylesheets="@hello-view.css"
+      styleClass="game-root" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.arevalo_henry_csc311_playingcards.HelloController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="28.0" left="32.0" right="32.0" top="28.0"/>
     </padding>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+    <Label text="Card Game 24" styleClass="game-title"/>
+    <Label text="Use each card value exactly once with +, -, *, /, and parentheses."
+           styleClass="game-instructions"/>
+    <HBox alignment="CENTER" spacing="12.0">
+        <ImageView fx:id="firstCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
+        <ImageView fx:id="secondCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
+        <ImageView fx:id="thirdCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
+        <ImageView fx:id="fourthCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
+    </HBox>
+    <TextField fx:id="expressionField" promptText="Example: (3 + 5) * (1 + 2)"
+               onAction="#onVerifyButtonClick" maxWidth="420.0"/>
+    <HBox alignment="CENTER" spacing="12.0">
+        <Button text="Verify" onAction="#onVerifyButtonClick" defaultButton="true"/>
+        <Button text="Refresh" onAction="#onRefreshButtonClick"/>
+    </HBox>
+    <Label fx:id="statusLabel" text="Enter an expression using the four card values."
+           wrapText="true" maxWidth="500.0" styleClass="status-message, status-neutral"/>
 </VBox>

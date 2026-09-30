@@ -1,0 +1,30 @@
+.game-root {
+    -fx-background-color: #f4f6f8;
+}
+
+.game-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.game-instructions {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4b5563;
+}
+
+.status-message {
+    -fx-font-size: 14px;
+}
+
+.status-neutral {
+    -fx-text-fill: #333333;
+}
+
+.status-success {
+    -fx-text-fill: #187a36;
+}
+
+.status-error {
+    -fx-text-fill: #b42318;
+}
