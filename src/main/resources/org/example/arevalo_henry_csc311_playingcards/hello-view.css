@@ -17,6 +17,12 @@
     -fx-font-family: monospace;
 }
 
+.card-frame {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
 .status-message {
     -fx-font-size: 14px;
 }

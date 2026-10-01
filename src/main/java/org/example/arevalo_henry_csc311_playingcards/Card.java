@@ -2,6 +2,8 @@ package org.example.arevalo_henry_csc311_playingcards;
 
 import java.util.Objects;
 
+
+//Where the card images are appearing and where its being held and described.
 public final class Card {
     public enum Rank {
         ACE("ace", 1),
@@ -31,6 +33,7 @@ public final class Card {
         }
     }
 
+    //Allowing the understanding of the different card shapes
     public enum Suit {
         CLUBS("clubs"),
         DIAMONDS("diamonds"),

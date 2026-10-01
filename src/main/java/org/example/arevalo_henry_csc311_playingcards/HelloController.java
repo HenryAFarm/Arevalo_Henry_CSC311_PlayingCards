@@ -34,6 +34,7 @@ public class HelloController {
         refreshGame();
     }
 
+    //Making sure gameslogic is correct once the verify button is pressed
     @FXML
     private void onVerifyButtonClick() {
         GameLogic.VerificationResult result =
@@ -43,6 +44,7 @@ public class HelloController {
         statusLabel.getStyleClass().add(result.isCorrect() ? "status-success" : "status-error");
     }
 
+    //The function of the button, allow it to work, once the button is pressed.
     @FXML
     private void onFindSolutionButtonClick() {
         Optional<String> solution = gameLogic.findSolution(currentCards);
@@ -64,6 +66,7 @@ public class HelloController {
         refreshGame();
     }
 
+    //When refreshing it allows to the game to provide new cards for the user to do now
     private void refreshGame() {
         currentCards = gameLogic.dealCards();
         ImageView[] cardImages = {

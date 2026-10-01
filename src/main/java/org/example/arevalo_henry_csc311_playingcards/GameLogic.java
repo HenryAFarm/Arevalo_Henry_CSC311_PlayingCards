@@ -6,17 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * Handles the card-dealing and answer-validation rules for the 24 game.
- * This class is independent of JavaFX so the game rules can be tested separately.
- */
+
+//This whole class, handles the card-dealing and answer-validation rules for the 24 game.
 public final class GameLogic {
     private static final int CARDS_PER_ROUND = 4;
     private static final double RESULT_TOLERANCE = 1.0e-9;
 
-    /**
-     * Creates a shuffled standard deck and deals four distinct cards.
-     */
+    //Creates a shuffled standard deck and deals four distinct cards.
     public List<Card> dealCards() {
         List<Card> deck = new ArrayList<>();
         for (Card.Suit suit : Card.Suit.values()) {
@@ -29,9 +25,8 @@ public final class GameLogic {
         return Collections.unmodifiableList(new ArrayList<>(deck.subList(0, CARDS_PER_ROUND)));
     }
 
-    /**
-     * Finds an expression that uses each dealt card value once and evaluates to 24.
-     */
+    //Finds an expression that uses each dealt card value once and evaluates to 24.
+    //Very helpful since think of a solution to the problem can be very hard
     public Optional<String> findSolution(List<Card> cards) {
         validateCards(cards);
 
@@ -42,9 +37,10 @@ public final class GameLogic {
         return findSolutionExpression(terms);
     }
 
-    /**
-     * Checks that an expression uses the dealt card values exactly once and evaluates to 24.
-     */
+
+
+    // Checks that an expression uses the dealt card values exactly once and evaluates to 24.
+    //Important to make sure that expression that user type is correct.
     public VerificationResult verifyExpression(List<Card> cards, String expression) {
         validateCards(cards);
         if (expression == null || expression.trim().isEmpty()) {
@@ -59,6 +55,7 @@ public final class GameLogic {
             return VerificationResult.failure(exception.getMessage());
         }
 
+        //Making sure thr rules are followed
         if (parser.getValues().size() != CARDS_PER_ROUND) {
             return VerificationResult.failure("Use each of the four card values exactly once.");
         }
@@ -81,6 +78,7 @@ public final class GameLogic {
         return VerificationResult.success();
     }
 
+    //Making sure, that whatever ths user inputs, it has an error display to them to see.
     private static void validateCards(List<Card> cards) {
         Objects.requireNonNull(cards, "cards cannot be null");
         if (cards.size() != CARDS_PER_ROUND || cards.contains(null)) {
@@ -150,6 +148,7 @@ public final class GameLogic {
         }
     }
 
+    //displays the verification result to the display box
     public static final class VerificationResult {
         private final boolean correct;
         private final String message;
@@ -176,6 +175,7 @@ public final class GameLogic {
         }
     }
 
+    //If the user inputs the wrong type of text to the textfield
     private static final class ExpressionParser {
         private final String expression;
         private final List<Integer> values = new ArrayList<>();
