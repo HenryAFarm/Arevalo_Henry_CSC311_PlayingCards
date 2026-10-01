@@ -21,6 +21,18 @@
     -fx-font-size: 14px;
 }
 
+.status-box {
+    -fx-alignment: center;
+    -fx-background-color: white;
+    -fx-background-radius: 4px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1px;
+    -fx-min-height: 34px;
+    -fx-padding: 6px 10px;
+    -fx-text-alignment: center;
+}
+
 .status-neutral {
     -fx-text-fill: #333333;
 }

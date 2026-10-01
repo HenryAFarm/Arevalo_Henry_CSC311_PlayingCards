@@ -82,7 +82,7 @@ public class HelloController {
 
         expressionField.clear();
         solutionField.clear();
-        statusLabel.setText("Enter an expression that uses each card value once and equals 24.");
+        statusLabel.setText("New cards dealt. Try to make 24.");
         statusLabel.getStyleClass().removeAll("status-neutral", "status-success", "status-error");
         statusLabel.getStyleClass().add("status-neutral");
     }

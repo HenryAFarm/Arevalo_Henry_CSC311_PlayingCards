@@ -20,7 +20,7 @@
     <HBox alignment="CENTER" spacing="10.0">
         <Button text="Find a solution" onAction="#onFindSolutionButtonClick"/>
         <TextField fx:id="solutionField" promptText="Solution Expression"
-                   editable="false" prefWidth="420.0" maxWidth="420.0"
+                   editable="false" prefWidth="320.0" maxWidth="320.0"
                    styleClass="solution-field"/>
     </HBox>
     <HBox alignment="CENTER" spacing="12.0">
@@ -29,12 +29,16 @@
         <ImageView fx:id="thirdCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
         <ImageView fx:id="fourthCardImage" fitHeight="150.0" fitWidth="105.0" preserveRatio="true"/>
     </HBox>
-    <TextField fx:id="expressionField" promptText="Example: (3 + 5) * (1 + 2)"
-               onAction="#onVerifyButtonClick" maxWidth="420.0"/>
+    <HBox alignment="CENTER" spacing="12.0">
+        <Label text="Enter an expression:"/>
+        <TextField fx:id="expressionField" promptText="Example: (3 + 5) * (1 + 2)"
+                   onAction="#onVerifyButtonClick" maxWidth="420.0"/>
+    </HBox>
+    <Label fx:id="statusLabel" text=""
+           wrapText="true" maxWidth="400.0"
+           styleClass="status-message, status-box, status-neutral"/>
     <HBox alignment="CENTER" spacing="12.0">
         <Button text="Verify" onAction="#onVerifyButtonClick" defaultButton="true"/>
         <Button text="Refresh" onAction="#onRefreshButtonClick"/>
     </HBox>
-    <Label fx:id="statusLabel" text="Enter an expression using the four card values."
-           wrapText="true" maxWidth="500.0" styleClass="status-message, status-neutral"/>
 </VBox>
